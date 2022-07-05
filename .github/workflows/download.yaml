@@ -1,6 +1,7 @@
 name: Download deleted_domains.txt
 
 on:
+  workflow_dispatch:
   schedule:
     - cron:  '30 10 * * *'
 
