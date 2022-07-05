@@ -11,7 +11,12 @@
     "type": "git",
     "url": "git+https://github.com/crabtree/deleted-domains-pl.git"
   },
-  "keywords": ["dns", "domains", "domain", "dns.pl"],
+  "keywords": [
+    "dns",
+    "domains",
+    "domain",
+    "dns.pl"
+  ],
   "author": "Krystian Cieślik",
   "license": "ISC",
   "bugs": {
