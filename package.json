@@ -4,6 +4,7 @@
   "description": "Daily dump of deleted domains from dns.pl",
   "main": "download.js",
   "scripts": {
+    "download": "node download.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
