@@ -16,7 +16,7 @@ function getPath() {
     return path.join(
         PATH_ROOT,
         now.getFullYear().toString(),
-        padWithZero(now.getUTCMonth()),
+        padWithZero(now.getMonth()+1),
         `${now.getFullYear()}-${padWithZero(now.getMonth()+1)}-${padWithZero(now.getDate())}.txt`
     );
 }
