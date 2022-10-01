@@ -29,15 +29,23 @@ function prepareDir(fp) {
 async function getFile(url, fp) {
     return new Promise((resolve, reject) => {
         https.get(url, (res) => {
+            if(res.statusCode != 200) {
+                return reject(`Got status code ${res.statusCode}`);
+            }
+
             const f = fs.createWriteStream(fp);
             res.pipe(f);
+            
             f.on("finish", () => {
-                f.close();
-                resolve();
+                f.close((err) => {
+                    if(err) {
+                        return reject(`Got error on f.close, ${err}`);
+                    }
+                    return resolve();
+                });
             });
-        }).on("error", () => {
-            fs.unlinkSync(fp);
-            reject();
+        }).on("error", (err) => {
+            return reject(`Got error on https.get, ${err}`);
         });
     });
 }
@@ -45,7 +53,16 @@ async function getFile(url, fp) {
 async function main() {
     const fp = getPath();
     prepareDir(fp);
-    await getFile(URL, fp);
+    
+    try {
+        await getFile(URL, fp);
+    } catch(ex) {
+        console.error(ex);
+        if (fs.existsSync(fp)) {
+            fs.unlinkSync(fp);
+        }
+        process.exit(1);
+    }
 }
 
 main();
