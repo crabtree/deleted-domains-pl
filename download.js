@@ -2,7 +2,7 @@ const path = require("path");
 const https = require("https");
 const fs = require("fs");
 
-const URL = "https://dns.pl/deleted_domains.txt"
+const URL = "https://dns.pl/deleted_domains1.txt"
 const PATH_ROOT = "deleted_domains"
 
 function padWithZero(value) {
@@ -29,15 +29,23 @@ function prepareDir(fp) {
 async function getFile(url, fp) {
     return new Promise((resolve, reject) => {
         https.get(url, (res) => {
+            if(res.statusCode != 200) {
+                return reject(`Got status code ${res.statusCode}`);
+            }
+
             const f = fs.createWriteStream(fp);
             res.pipe(f);
+            
             f.on("finish", () => {
-                f.close();
-                resolve();
+                f.close((err) => {
+                    if(err) {
+                        return reject(`Got error on f.close, ${err}`);
+                    }
+                    return resolve();
+                });
             });
-        }).on("error", () => {
-            fs.unlinkSync(fp);
-            reject();
+        }).on("error", (err) => {
+            return reject(`Got error on https.get, ${err}`);
         });
     });
 }
@@ -45,7 +53,14 @@ async function getFile(url, fp) {
 async function main() {
     const fp = getPath();
     prepareDir(fp);
-    await getFile(URL, fp);
+    
+    try {
+        await getFile(URL, fp);
+    } catch(ex) {
+        console.error(ex);
+        fs.unlinkSync(fp);
+        process.exit(1);
+    }
 }
 
 main();
