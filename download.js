@@ -2,7 +2,7 @@ const path = require("path");
 const https = require("https");
 const fs = require("fs");
 
-const URL = "https://dns.pl/deleted_domains1.txt"
+const URL = "https://dns.pl/deleted_domains.txt"
 const PATH_ROOT = "deleted_domains"
 
 function padWithZero(value) {
