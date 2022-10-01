@@ -58,7 +58,9 @@ async function main() {
         await getFile(URL, fp);
     } catch(ex) {
         console.error(ex);
-        fs.unlinkSync(fp);
+        if (fs.existsSync(fp)) {
+            fs.unlinkSync(fp);
+        }
         process.exit(1);
     }
 }
