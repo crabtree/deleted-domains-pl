@@ -26,4 +26,4 @@ jobs:
 
     - run: |
         FILE=deleted_domains/`date +%Y`/`date +%m`/`date +%Y-%m-%d`.txt
-        test -F "$FILE"       
+        test -f "$FILE"       
