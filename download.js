@@ -26,19 +26,26 @@ function prepareDir(fp) {
     fs.mkdirSync(dirname, { recursive: true });
 }
 
-function main() {
+async function getFile(url, fp) {
+    return new Promise((resolve, reject) => {
+        https.get(url, (res) => {
+            const f = fs.createWriteStream(fp);
+            res.pipe(f);
+            f.on("finish", () => {
+                f.close();
+                resolve();
+            });
+        }).on("error", () => {
+            fs.unlinkSync(fp);
+            reject();
+        });
+    });
+}
+
+async function main() {
     const fp = getPath();
     prepareDir(fp);
-    
-    const f = fs.createWriteStream(fp);
-    https.get(URL, (res) => {
-        res.pipe(f);
-        f.on("finish", () => {
-            f.close();
-        });
-    }).on("error", () => {
-        fs.unlink(fp);
-    });
+    await getFile(URL, fp);
 }
 
 main();
