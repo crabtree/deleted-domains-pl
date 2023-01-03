@@ -8,4 +8,4 @@ The NASK each day presents recently deleted domains under the URL [https://dns.p
 
 ## How to get the files?
 
-You can access each downloaded file directly under following path: `https://raw.githubusercontent.com/crabtree/deleted-domains-pl/deleted-domains/deleted_domains/{YEAR}/{MONTH}/{YEAR}-{MONTH}-{DAY}.txt`. Please keep in mind that the script started its life at 5th of July 2022.
+You can access each downloaded file directly under following path: `https://raw.githubusercontent.com/crabtree/deleted-domains-pl/deleted-domains/deleted_domains/{YEAR}/{MONTH}/{YEAR}-{MONTH}-{DAY}.txt`. Please keep in mind that the script started its life on 5th of July 2022.
